@@ -1,0 +1,70 @@
+let attendanceChart;
+
+function calculateAttendance() {
+    const totalClasses = parseInt(document.getElementById("totalClasses").value);
+    const attendedClasses = parseInt(document.getElementById("attendedClasses").value);
+    const requiredPercentage = parseFloat(document.getElementById("requiredPercentage").value);
+    const resultContainer = document.getElementById("result");
+    const graphContainer = document.getElementById("graphContainer");
+
+    if (isNaN(totalClasses) || isNaN(attendedClasses) || isNaN(requiredPercentage)) {
+        resultContainer.innerHTML = "Please enter valid numbers in all fields.";
+        return;
+    }
+    if (totalClasses < attendedClasses) {
+        resultContainer.innerHTML = "Attended classes cannot exceed total classes.";
+        return;
+    }
+
+    const currentPercentage = (attendedClasses / totalClasses) * 100;
+    resultContainer.innerHTML = `Your current attendance is <strong>${currentPercentage.toFixed(2)}%</strong>.`;
+
+    if (currentPercentage >= requiredPercentage) {
+        resultContainer.innerHTML += `<br>Great! You have met the required attendance percentage.`;
+    } else {
+        const additionalClassesNeeded = Math.ceil(
+            (requiredPercentage / 100 * totalClasses - attendedClasses) / (1 - requiredPercentage / 100)
+        );
+        resultContainer.innerHTML += `<br>You need to attend <strong>${additionalClassesNeeded}</strong> more classes to reach ${requiredPercentage}%.`;
+    }
+
+    graphContainer.style.display = "block";
+    displayChart(currentPercentage, requiredPercentage);
+}
+
+function displayChart(currentPercentage, requiredPercentage) {
+    const ctx = document.getElementById("attendanceChart").getContext("2d");
+
+    if (attendanceChart) {
+        attendanceChart.destroy();
+    }
+
+    attendanceChart = new Chart(ctx, {
+        type: "doughnut",
+        data: {
+            labels: ["Current Attendance", "Remaining Attendance"],
+            datasets: [{
+                data: [currentPercentage, 100 - currentPercentage],
+                backgroundColor: ["#4caf50", "#ff9800"],
+                borderWidth: 1,
+            }]
+        },
+        options: {
+            responsive: true,
+            plugins: {
+                legend: {
+                    position: "top",
+                },
+            },
+        },
+    });
+}
+
+document.getElementById('clearButton').addEventListener('click', function() {
+    document.getElementById("attendanceForm").reset();
+    document.getElementById("result").innerHTML = "";
+    document.getElementById("graphContainer").style.display = "none";
+    if (attendanceChart) {
+        attendanceChart.destroy();
+    }
+});
