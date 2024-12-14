@@ -1,7 +1,7 @@
 # Attendance-Calculator
 If you are a student, teacher, or someone working in a company, this free Attendance Calculator online tool is for you. This Attendance Percentage Calculator will calculate your attendance record in just a few seconds.
 
-How does the Attendance Calculator work?
+# How does the Attendance Calculator work?
 
 This Free online attendance calculator for students is a user-friendly tool that helps users calculate their attendance records.
 
