@@ -12,3 +12,5 @@ Attended Classes: Enter the total number of classes you have attended.
 Required Attendance (%): Fill in the required attendance percentage in the box, because its default setting is 75% percent.
 
 Enter the total classes, attended classes, and required attendance percentage in the given boxes. Then click on the "Calculate" button. This attendance calculator app will show your attendance percentage.
+
+View Demo: [attendancecalculators.com](https://attendancecalculators.com)
